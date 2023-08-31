@@ -31,7 +31,6 @@ const RepoListPage = () => {
   const observerRef = useRef<HTMLDivElement>(null);
   const callback = (entries, observer) => {
     if (entries[0].isIntersecting) {
-      console.log(entries[0].target);
       setPageNumber((prev) => prev + 1);
       observer.unobserve(entries[0].target);
     }
