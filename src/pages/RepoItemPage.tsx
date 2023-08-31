@@ -73,9 +73,9 @@ const RepoItemPage = () => {
               <div>{`Issue #${pageDetailData.itemNumber}`}</div>
               <TitleDiv>{pageDetailData.itemTitle}</TitleDiv>
               <div>{`${year}년 ${month}월 ${day} 일`} </div>
+              <CommentSize>comments : {pageDetailData.commentCount}</CommentSize>
             </IssueDetail>
           </IssueInfoDiv>
-          <CommentSize>comments : {pageDetailData.commentCount}</CommentSize>
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{pageDetailData?.html}</ReactMarkdown>
         </PageWrapper>
       )}
@@ -86,10 +86,10 @@ const RepoItemPage = () => {
 export default RepoItemPage;
 
 const PageWrapper = styled.div`
-  margin-top: 30px;
-  margin-left: 40px;
-  margin-right: 40px;
-  margin-bottom: 30px;
+  margin-top: 50px;
+  margin-left: 80px;
+  margin-right: 80px;
+  margin-bottom: 80px;
 `;
 
 const UserInfoDiv = styled.div`
@@ -113,6 +113,7 @@ const IssueDetail = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding-bottom: 10px;
 `;
 
 const TitleDiv = styled.div`

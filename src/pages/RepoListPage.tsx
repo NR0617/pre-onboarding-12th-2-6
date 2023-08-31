@@ -13,7 +13,7 @@ const RepoListPage = () => {
   const ITEMS_BEFORE_AD = 4;
   const [isLodingData, setIsLodingData] = useState(true);
   const [issueDataArray, setIssueDataArray] = useState<any[]>([]);
-  const [pageNumber, setPageNumber] = useState<number>(98);
+  const [pageNumber, setPageNumber] = useState<number>(1);
 
   const ARRAY_SIZE = 15;
   useEffect(() => {
