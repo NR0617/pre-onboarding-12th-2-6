@@ -5,19 +5,28 @@ export const octokit = new Octokit({
   auth: token,
 });
 export const callRepoIssue = async (pagenum) => {
-  const result = await octokit.request(`GET /repos/{owner}/{repo}/issues?per_page=15&page=${pagenum}`, {
-    owner: 'facebook',
-    repo: 'react',
-  });
-  console.log(result.data);
-  return result.data;
+  try {
+    const result = await octokit.request(`GET /repos/{owner}/{repo}/issues?per_page=15&page=${pagenum}`, {
+      owner: 'facebook',
+      repo: 'react',
+    });
+    console.log(result);
+    if (!result || !result.data || result.data.length === 0) throw new Error();
+    return result.data;
+  } catch (error) {
+    throw new Error();
+  }
 };
 
 export const callIssueDetail = async (issueId) => {
-  const result = await octokit.request(`GET /repos/{owner}/{repo}/issues/${issueId}`, {
-    owner: 'facebook',
-    repo: 'react',
-  });
-  console.log(result);
-  return result.data;
+  try {
+    const result = await octokit.request(`GET /repos/{owner}/{repo}/issues/${issueId}`, {
+      owner: 'facebook',
+      repo: 'react',
+    });
+    console.log(result.data);
+    return result.data;
+  } catch (error) {
+    throw new Error();
+  }
 };

@@ -11,6 +11,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<RepoListPage />} />
           <Route path="detail" element={<RepoItemPage />} />
+          <Route path="error" element={<NoMatch />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>

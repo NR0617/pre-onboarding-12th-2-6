@@ -18,10 +18,14 @@ const RepoListPage = () => {
   useEffect(() => {
     if (!isLodingData) setIsLodingData(true);
 
-    callRepoIssue(pageNumber).then((res) => {
-      setIsLodingData(false);
-      setIssueDataArray((prev) => [...prev, ...res]);
-    });
+    callRepoIssue(pageNumber)
+      .then((res) => {
+        setIsLodingData(false);
+        setIssueDataArray((prev) => [...prev, ...res]);
+      })
+      .catch(() => {
+        navigate('error');
+      });
   }, [pageNumber]);
 
   const observerRef = useRef<HTMLDivElement>(null);
