@@ -4,6 +4,7 @@ import { getIssueDetail } from 'utils/octokit';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import remarkGfm from 'remark-gfm';
 import Spinner from 'components/LoadingSpinner';
+import { styled } from 'styled-components';
 
 interface DetailData {
   html: string;
@@ -52,23 +53,71 @@ const RepoItemPage = () => {
       });
   }, [issueNumber]);
 
+  const date = new Date(pageDetailData.createdAt);
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const day = date.getDate();
+
   return (
     <div>
       {isLoading ? (
         <Spinner />
       ) : (
-        <>
-          <img src={pageDetailData.userProfileImage} alt="" />
-          <span>{pageDetailData.username}</span>
-          <span>{pageDetailData.itemNumber}</span>
-          <span>{pageDetailData.itemTitle}</span>
-          <span>{pageDetailData.createdAt}</span>
-          <span>{pageDetailData.commentCount}</span>
+        <PageWrapper>
+          <IssueInfoDiv>
+            <UserInfoDiv>
+              <ProfileImg src={pageDetailData.userProfileImage} alt="" />
+              <UsernameDiv>{pageDetailData.username}</UsernameDiv>
+            </UserInfoDiv>
+            <IssueDetail>
+              <div>{`Issue #${pageDetailData.itemNumber}`}</div>
+              <TitleDiv>{pageDetailData.itemTitle}</TitleDiv>
+              <div>{`${year}년 ${month}월 ${day} 일`} </div>
+            </IssueDetail>
+          </IssueInfoDiv>
+          <CommentSize>comments : {pageDetailData.commentCount}</CommentSize>
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{pageDetailData?.html}</ReactMarkdown>
-        </>
+        </PageWrapper>
       )}
     </div>
   );
 };
 
 export default RepoItemPage;
+
+const PageWrapper = styled.div`
+  margin-top: 30px;
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-bottom: 30px;
+`;
+
+const UserInfoDiv = styled.div`
+  margin-right: 50px;
+`;
+const ProfileImg = styled.img`
+  width: 100px;
+  height: 100px;
+`;
+
+const UsernameDiv = styled.div`
+  font-weight: bold;
+  text-align: left;
+`;
+
+const IssueInfoDiv = styled.div`
+  display: flex;
+`;
+
+const IssueDetail = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const TitleDiv = styled.div`
+  font-weight: bold;
+  font-size: 1.2em;
+`;
+
+const CommentSize = styled.div``;
