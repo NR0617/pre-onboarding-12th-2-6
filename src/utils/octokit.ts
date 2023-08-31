@@ -1,27 +1,26 @@
 import { Octokit } from 'octokit';
 
-const token = process.env.REACT_APP_GITHUB_TOKEN;
-export const octokit = new Octokit({
-  auth: token,
-});
-export const callRepoIssue = async (pagenum) => {
+const REQUEST_ISSUE = 'GET /repos/{owner}/{repo}/issues?per_page=15&page=';
+
+export const octokit = new Octokit({});
+export const getRepoIssue = async (pagenum) => {
   try {
-    const result = await octokit.request(`GET /repos/{owner}/{repo}/issues?per_page=15&page=${pagenum}`, {
+    const result = await octokit.request(REQUEST_ISSUE + pagenum, {
       owner: 'facebook',
       repo: 'react',
       state: 'open',
       sort: 'comments',
     });
-    if (!result || !result.data || result.data.length === 0) throw new Error();
     return result.data;
   } catch (error) {
     throw new Error();
   }
 };
 
-export const callIssueDetail = async (issueId) => {
+const REQUEST_DETAIL = 'GET /repos/{owner}/{repo}/issues/';
+export const getIssueDetail = async (issueId) => {
   try {
-    const result = await octokit.request(`GET /repos/{owner}/{repo}/issues/${issueId}`, {
+    const result = await octokit.request(REQUEST_DETAIL + issueId, {
       owner: 'facebook',
       repo: 'react',
     });

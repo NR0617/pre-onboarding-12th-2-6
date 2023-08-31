@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { callRepoIssue } from 'utils/octokit';
+import { getRepoIssue } from 'utils/octokit';
 import IssueItem from 'components/RepoListPage/IssueItem';
 import Spinner from 'components/LoadingSpinner';
 import { useNavigate } from 'react-router-dom';
@@ -13,18 +13,22 @@ const RepoListPage = () => {
   const ITEMS_BEFORE_AD = 4;
   const [isLodingData, setIsLodingData] = useState(true);
   const [issueDataArray, setIssueDataArray] = useState<any[]>([]);
-  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [pageNumber, setPageNumber] = useState<number>(98);
 
+  const ARRAY_SIZE = 15;
   useEffect(() => {
     if (!isLodingData) setIsLodingData(true);
-
-    callRepoIssue(pageNumber)
+    if (issueDataArray.length % ARRAY_SIZE !== 0) {
+      setIsLodingData(false);
+      return;
+    }
+    getRepoIssue(pageNumber)
       .then((res) => {
         setIsLodingData(false);
-        setIssueDataArray((prev) => [...prev, ...res]);
+        if (res.length !== 0) setIssueDataArray((prev) => [...prev, ...res]);
       })
-      .catch(() => {
-        navigate('error');
+      .catch((error) => {
+        navigate(error);
       });
   }, [pageNumber]);
 
@@ -59,7 +63,6 @@ const RepoListPage = () => {
           return (
             <div key={item.id}>
               {idx !== 0 && idx % ITEMS_BEFORE_AD === 0 && <AdComponent />}
-
               <IssueItem
                 onClick={() => {
                   navigateToDetailPage(item.number);

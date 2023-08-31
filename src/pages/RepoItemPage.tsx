@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { callIssueDetail } from 'utils/octokit';
+import { getIssueDetail } from 'utils/octokit';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import remarkGfm from 'remark-gfm';
 import Spinner from 'components/LoadingSpinner';
@@ -34,7 +34,7 @@ const RepoItemPage = () => {
   });
   useEffect(() => {
     if (issueNumber === null) navigate('/');
-    callIssueDetail(issueNumber)
+    getIssueDetail(issueNumber)
       .then((res) => {
         const data = {
           html: res.body,
