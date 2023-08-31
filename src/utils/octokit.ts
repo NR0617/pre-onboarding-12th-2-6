@@ -9,6 +9,8 @@ export const callRepoIssue = async (pagenum) => {
     const result = await octokit.request(`GET /repos/{owner}/{repo}/issues?per_page=15&page=${pagenum}`, {
       owner: 'facebook',
       repo: 'react',
+      state: 'open',
+      sort: 'comments',
     });
     if (!result || !result.data || result.data.length === 0) throw new Error();
     return result.data;
