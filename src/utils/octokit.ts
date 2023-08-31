@@ -10,7 +10,6 @@ export const callRepoIssue = async (pagenum) => {
       owner: 'facebook',
       repo: 'react',
     });
-    console.log(result);
     if (!result || !result.data || result.data.length === 0) throw new Error();
     return result.data;
   } catch (error) {
@@ -24,7 +23,6 @@ export const callIssueDetail = async (issueId) => {
       owner: 'facebook',
       repo: 'react',
     });
-    console.log(result.data);
     return result.data;
   } catch (error) {
     throw new Error();
