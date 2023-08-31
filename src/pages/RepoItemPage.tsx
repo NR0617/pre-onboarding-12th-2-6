@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { callIssueDetail } from 'utils/octokit';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import remarkGfm from 'remark-gfm';
+import Spinner from 'components/LoadingSpinner';
 
 interface DetailData {
   html: string;
@@ -20,6 +21,8 @@ const RepoItemPage = () => {
   const query = new URLSearchParams(location.search);
   const issueNumber = query.get('number');
 
+  const [isLoading, setIsLoading] = useState(true);
+
   const [pageDetailData, setPageDetailData] = useState<DetailData>({
     html: '',
     itemNumber: NaN,
@@ -33,7 +36,6 @@ const RepoItemPage = () => {
     if (issueNumber === null) navigate('/');
     callIssueDetail(issueNumber)
       .then((res) => {
-        console.log(res);
         const data = {
           html: res.body,
           itemNumber: res.number,
@@ -45,19 +47,26 @@ const RepoItemPage = () => {
         };
         setPageDetailData({ ...data });
       })
-      .catch(() => {});
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [issueNumber]);
 
   return (
     <div>
-      <p>RepoItemPage</p>
-      <img src={pageDetailData.userProfileImage} alt="" />
-      <span>{pageDetailData.username}</span>
-      <span>{pageDetailData.itemNumber}</span>
-      <span>{pageDetailData.itemTitle}</span>
-      <span>{pageDetailData.createdAt}</span>
-      <span>{pageDetailData.commentCount}</span>
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>{pageDetailData?.html}</ReactMarkdown>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          <img src={pageDetailData.userProfileImage} alt="" />
+          <span>{pageDetailData.username}</span>
+          <span>{pageDetailData.itemNumber}</span>
+          <span>{pageDetailData.itemTitle}</span>
+          <span>{pageDetailData.createdAt}</span>
+          <span>{pageDetailData.commentCount}</span>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{pageDetailData?.html}</ReactMarkdown>
+        </>
+      )}
     </div>
   );
 };
