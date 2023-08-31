@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { marked } from 'marked'; // marked 라이브러리 사용
 import { useLocation, useNavigate } from 'react-router-dom';
 import { callIssueDetail } from 'utils/octokit';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const RepoItemPage = () => {
   const navigate = useNavigate();
@@ -11,21 +12,18 @@ const RepoItemPage = () => {
 
   const [html, setHtml] = useState('');
   useEffect(() => {
-    if (issueNumber === null) return;
+    if (issueNumber === null) navigate('/');
     callIssueDetail(issueNumber)
       .then((res) => {
-        const htmlBody = marked(res.body);
-        setHtml(htmlBody);
+        setHtml(res.body);
       })
-      .catch(() => {
-        navigate('/');
-      });
+      .catch(() => {});
   }, [issueNumber]);
 
   return (
     <div>
       <p>RepoItemPage</p>
-      <div dangerouslySetInnerHTML={{ __html: html }} />
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>{html}</ReactMarkdown>
     </div>
   );
 };
