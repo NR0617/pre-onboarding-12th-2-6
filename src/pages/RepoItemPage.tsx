@@ -34,26 +34,29 @@ const RepoItemPage = () => {
     userProfileImage: '',
   });
   useEffect(() => {
-    if (issueNumber === null) navigate('/');
-    getIssueDetail(issueNumber)
-      .then((res) => {
-        const data = {
-          html: res.body,
-          itemNumber: res.number,
-          itemTitle: res.title,
-          username: res.user.login,
-          createdAt: res.created_at,
-          commentCount: res.comments,
-          userProfileImage: res.user.avatar_url,
-        };
-        setPageDetailData({ ...data });
-      })
-      .catch(() => {
-        navigate('/');
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    if (issueNumber === null) {
+      navigate('/');
+    } else {
+      getIssueDetail(issueNumber)
+        .then((res) => {
+          const data = {
+            html: res.body,
+            itemNumber: res.number,
+            itemTitle: res.title,
+            username: res.user.login,
+            createdAt: res.created_at,
+            commentCount: res.comments,
+            userProfileImage: res.user.avatar_url,
+          };
+          setPageDetailData({ ...data });
+        })
+        .catch(() => {
+          navigate('/');
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
   }, [issueNumber]);
 
   const date = new Date(pageDetailData.createdAt);
