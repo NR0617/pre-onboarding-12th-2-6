@@ -1,7 +1,48 @@
-### 무한 스크롤 구현  
+## 어플리케이션 소개
+특정 깃헙 레파지토리(Issues react)의 이슈 목록과 상세 내용을 확인하는 웹 사이트 구축
+<br>
+<br>
+
+## 프로젝트 실행 방법
+```
+git clone https://github.com/NR0617/pre-onboarding-12th-2-6.git
+
+npm install
+npm start
+```
+<br>
+<br>
+
+## 폴더 구조
+```
+📦 
+├─ README.md
+├─ public
+├─ src
+│  ├─ App.css
+│  ├─ App.tsx
+│  ├─ components
+│  │  ├─ LoadingSpinner.ts
+│  │  └─ RepoListPage
+│  │     └─ IssueItem.tsx
+│  ├─ index.css
+│  ├─ index.tsx
+│  ├─ pages
+│  │  ├─ Nomatch.tsx
+│  │  ├─ RepoItemPage.tsx
+│  │  └─ RepoListPage.tsx
+│  └─ utils
+│     └─ octokit.ts
+└─ tsconfig.json
+```
+<br>
+<br>
+
+## 기능 구현
+
+### 무한 스크롤 구현 
 
 1. Intersection Observer를 이용하여 페이지 하단 엘리먼트를 관찰합니다.
-
 
 ```js
   const observerRef = useRef<HTMLDivElement>(null);
@@ -53,6 +94,7 @@ return(
   }, [pageNumber]);
 
 ```
+<hr>
 
 ### 마크다운 파싱 라이브러리와 디테일 페이지 구현
 
@@ -102,5 +144,45 @@ useEffect(() => {
       });
   }, [issueNumber]);
   ```
+  <br>
+  <br>
 
+## API 관리
+1. Octokit을 사용하여 전체 데이터 요청 함수와 상세 페이지 데이터 요청 함수를 만들었습니다
+2. api를 요청하는 url은 변수로 관리했습니다
+
+```javascript
+mport { Octokit } from 'octokit';
+
+const REQUEST_ISSUE = 'GET /repos/{owner}/{repo}/issues?per_page=15&page=';
+
+export const octokit = new Octokit({});
+export const getRepoIssue = async (pagenum) => {
+  try {
+    const result = await octokit.request(REQUEST_ISSUE + pagenum, {
+      owner: 'facebook',
+      repo: 'react',
+      state: 'open',
+      sort: 'comments',
+    });
+    return result.data;
+  } catch (error) {
+    throw new Error();
+  }
+};
+
+const REQUEST_DETAIL = 'GET /repos/{owner}/{repo}/issues/';
+export const getIssueDetail = async (issueId) => {
+  try {
+    const result = await octokit.request(REQUEST_DETAIL + issueId, {
+      owner: 'facebook',
+      repo: 'react',
+    });
+    return result.data;
+  } catch (error) {
+    throw new Error();
+  }
+};
+
+```
 
