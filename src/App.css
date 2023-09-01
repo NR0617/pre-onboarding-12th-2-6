@@ -9,3 +9,7 @@
   font-size: 1.5em;
   border-bottom: 1px solid black;
 }
+
+img {
+  width: 100%;
+}

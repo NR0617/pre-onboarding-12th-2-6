@@ -76,7 +76,9 @@ const RepoItemPage = () => {
               <CommentSize>comments : {pageDetailData.commentCount}</CommentSize>
             </IssueDetail>
           </IssueInfoDiv>
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{pageDetailData?.html}</ReactMarkdown>
+          <div style={{ fontSize: '1.2em' }}>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{pageDetailData?.html}</ReactMarkdown>
+          </div>
         </PageWrapper>
       )}
     </div>
