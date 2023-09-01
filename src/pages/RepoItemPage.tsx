@@ -109,6 +109,8 @@ const UsernameDiv = styled.div`
 
 const IssueInfoDiv = styled.div`
   display: flex;
+  border-bottom: 1px solid black;
+  padding-bottom: 20px;
 `;
 
 const IssueDetail = styled.div`
