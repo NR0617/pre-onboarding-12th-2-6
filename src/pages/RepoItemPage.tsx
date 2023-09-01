@@ -48,6 +48,9 @@ const RepoItemPage = () => {
         };
         setPageDetailData({ ...data });
       })
+      .catch(() => {
+        navigate('/');
+      })
       .finally(() => {
         setIsLoading(false);
       });
