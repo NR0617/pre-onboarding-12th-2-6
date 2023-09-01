@@ -3,6 +3,7 @@ import { getRepoIssue } from 'utils/octokit';
 import IssueItem from 'components/RepoListPage/IssueItem';
 import Spinner from 'components/LoadingSpinner';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 const RepoListPage = () => {
   const navigate = useNavigate();
@@ -91,11 +92,20 @@ export default RepoListPage;
 
 const AdComponent = () => {
   return (
-    <a href="https://www.wanted.co.kr/">
-      <img
-        alt=""
-        src="https://image.wanted.co.kr/optimize?src=https%3A%2F%2Fstatic.wanted.co.kr%2Fimages%2Fuserweb%2Flogo_wanted_black.png&w=110&q=100"
-      />
-    </a>
+    <AdBanner>
+      <a href="https://www.wanted.co.kr/">
+        <img
+          alt=""
+          src="https://image.wanted.co.kr/optimize?src=https%3A%2F%2Fstatic.wanted.co.kr%2Fimages%2Fuserweb%2Flogo_wanted_black.png&w=110&q=100"
+        />
+      </a>
+    </AdBanner>
   );
 };
+
+const AdBanner = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+`;

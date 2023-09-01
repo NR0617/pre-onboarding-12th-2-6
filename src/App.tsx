@@ -3,6 +3,7 @@ import RepoListPage from 'pages/RepoListPage';
 import { Routes, Route, Outlet } from 'react-router-dom';
 import NoMatch from 'pages/Nomatch';
 import RepoItemPage from 'pages/RepoItemPage';
+import 'App.css';
 
 function App() {
   return (
@@ -24,7 +25,9 @@ export default App;
 function Layout() {
   return (
     <div>
-      <header>Organization Name / Repository Name</header>
+      <div className="header">
+        <p>Organization Name / Repository Name</p>
+      </div>
       <Outlet />
     </div>
   );

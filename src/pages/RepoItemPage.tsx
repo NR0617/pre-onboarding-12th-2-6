@@ -90,6 +90,8 @@ const PageWrapper = styled.div`
   margin-left: 80px;
   margin-right: 80px;
   margin-bottom: 80px;
+  height: 100vh;
+  box-sizing: border-box;
 `;
 
 const UserInfoDiv = styled.div`
