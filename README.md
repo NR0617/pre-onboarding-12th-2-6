@@ -3,6 +3,12 @@
 <br>
 <br>
 
+## 배포 링크
+https://pre-onboarding-12th-2-6.vercel.app/
+
+<br>
+<br>
+
 ## 프로젝트 실행 방법
 ```
 git clone https://github.com/NR0617/pre-onboarding-12th-2-6.git
