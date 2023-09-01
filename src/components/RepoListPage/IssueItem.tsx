@@ -3,14 +3,14 @@ import styled from 'styled-components';
 
 type IssueItemProps = {
   onClick: () => void; // 이 줄을 추가합니다.
-  issueId: number;
+  issueNumber: number;
   issueTitle: string;
   username: string;
   createdAt: string;
   commentCount: number;
 };
 
-const IssueItem = ({ onClick, issueId, issueTitle, username, createdAt, commentCount }: IssueItemProps) => {
+const IssueItem = ({ onClick, issueTitle, username, createdAt, commentCount, issueNumber }: IssueItemProps) => {
   const date = new Date(createdAt);
   const year = date.getFullYear();
   const month = date.getMonth();
@@ -18,7 +18,7 @@ const IssueItem = ({ onClick, issueId, issueTitle, username, createdAt, commentC
 
   return (
     <ItemContainer onClick={onClick}>
-      <IdDiv>{`Issue #${issueId}`}</IdDiv>
+      <IdDiv>{`Issue #${issueNumber}`}</IdDiv>
       <TitleDiv>{issueTitle}</TitleDiv>
       <ItemInfoDiv>
         <UsernameDiv>{username}</UsernameDiv>

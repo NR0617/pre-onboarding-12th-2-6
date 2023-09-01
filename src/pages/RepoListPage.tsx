@@ -68,7 +68,7 @@ const RepoListPage = () => {
                 onClick={() => {
                   navigateToDetailPage(item.number);
                 }}
-                issueId={item.id}
+                issueNumber={item.number}
                 issueTitle={item.title}
                 username={item.user.login}
                 createdAt={item.created_at}
